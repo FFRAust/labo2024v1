@@ -1,4 +1,4 @@
-# Arbol elemental con libreria  rpart #Bayesian1
+# Arbol elemental con libreria  rpart #Ranking 1 optimización
 # Debe tener instaladas las librerias  data.table  ,  rpart  y  rpart.plot
 
 # cargo las librerias que necesito
@@ -21,10 +21,10 @@ modelo <- rpart(
         formula = "clase_ternaria ~ .",
         data = dtrain, # los datos donde voy a entrenar
         xval = 0,
-        cp = -0.177, # esto significa no limitar la complejidad de los splits
-        minsplit = 969, # minima cantidad de registros para que se haga el split
-        minbucket = 480, # tamaño minimo de una hoja
-        maxdepth = 6
+        cp = -1, # esto significa no limitar la complejidad de los splits
+        minsplit = 400, # minima cantidad de registros para que se haga el split
+        minbucket = 2, # tamaño minimo de una hoja
+        maxdepth = 9
 ) # profundidad maxima del arbol
 
 
@@ -60,6 +60,6 @@ dapply[, Predicted := as.numeric(prob_baja2 > 1 / 40)]
 
 # solo los campos para Kaggle
 fwrite(dapply[, list(numero_de_cliente, Predicted)],
-        file = "./exp/KA2001/K101_001_Bayesian1.csv",
+        file = "./exp/KA2001/K101_001rank1.csv",
         sep = ","
 )
